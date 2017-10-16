@@ -14,14 +14,19 @@ class Grid(object):
 
 	def find_diag_threes(self):
 		for i in range(self.width - 1):
+			print("Starting work on row", i)
 			for j in range(self.width - 1):
-				if (self.grid[i][j].clue == 3) and (self.grid[i+1][j+1] == 3):
+				print(self.grid[i][j].clue, self.grid[i+1][j+1].clue)
+				if (self.grid[i][j].clue == 3) and (self.grid[i+1][j+1].clue == 3):
+					print("Diagonal 3's found!")
 					self.shade_left(i, j)
 					self.shade_top(i, j)
 					self.shade_right(i + 1, j + 1)
 					self.shade_bottom(i + 1, j + 1)
 			for j in range(1, self.width):
-				if (self.grid[i][j].clue == 3) and (self.grid[i+1][j-1] == 3):
+				print(self.grid[i][j].clue, self.grid[i+1][j-1].clue)
+				if (self.grid[i][j].clue == 3) and (self.grid[i+1][j-1].clue == 3):
+					print("Diagonal 3's found!")
 					self.shade_top(i, j)
 					self.shade_right(i, j)
 					self.shade_left(i+1, j-1)
