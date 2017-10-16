@@ -14,3 +14,11 @@ class Square(object):
 		self.right = 1
 	def shade_left(self):
 		self.left = 1
+	def cross_top(self):
+		self.top = -1
+	def cross_bottom(self):
+		self.bottom = -1
+	def cross_right(self):
+		self.right = -1
+	def cress_left(self):
+		self.left = =-1
