@@ -58,6 +58,44 @@ class Grid(object):
 					if i is not self.width-1:
 						self.cross_right(i+1, j)
 
+	def corner_clues(self):
+		if self.grid[0][0].clue == 3:
+			self.shade_left(0, 0)
+			self.shade_top(0, 0)
+		elif self.grid[0][0].clue == 2:
+			self.shade_top(0, 1)
+			self.shade_left(1, 0)
+		elif self.grid[0][0].clue == 1:
+			self.cross_left(0, 0)
+			self.cross_top(0, 0)
+		if self.grid[0][self.width-1].clue == 3:
+			self.shade_right(0, self.width-1)
+			self.shade_top(0, self.width-1)
+		elif self.grid[0][self.width-1].clue == 2:
+			self.shade_top(0, self.width-2)
+			self.shade_right(1, self.width-1)
+		elif self.grid[0][self.width-1].clue == 1:
+			self.cross_right(0, self.width-1)
+			self.cross_top(0, self.width-1)
+		if self.grid[self.width-1][0].clue == 3:
+			self.shade_left(self.width-1, 0)
+			self.shade_bottom(self.width-1, 0)
+		elif self.grid[self.width-1][0].clue == 2:
+			self.shade_left(self.width-2, 0)
+			self.shade_right(self.width-1, 1)
+		elif self.grid[self.width-1][0].clue == 1:
+			self.cross_left(self.width-1, 0)
+			self.cross_bottom(self.width-1, 0)
+		if self.grid[self.width-1][self.width-1].clue == 3:
+			self.shade_right(self.width-1, self.width-1)
+			self.shade_bottom(self.width-1, self.width-1)
+		elif self.grid[self.width-1][self.width-1].clue == 2:
+			self.shade_right(self.width-2, self.width-1)
+			self.shade_bottom(self.width-1, self.width-2)
+		elif self.grid[self.width-1][self.width-1].clue == 1:
+			self.cross_right(self.width-1, self.width-1)
+			self.cross_bottom(self.width-1, self.width-1)
+
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
 		if col != 0:
