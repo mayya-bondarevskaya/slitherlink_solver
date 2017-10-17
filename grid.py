@@ -261,6 +261,37 @@ class Grid(object):
 						self.shade_top(i,j)
 						self.shade_bottom(i,j)
 
+	def find_twos(self):
+		for i in range(self.width):
+			for j in range(self.width):
+				if self.grid[i][j].clue == 2:
+					if (self.grid[i][j].top == -1) and\
+					   (self.grid[i][j].right == -1):
+						self.shade_left(i,j)
+						self.shade_bottom(i,j)
+					elif (self.grid[i][j].top == -1) and\
+						 (self.grid[i][j].bottom == -1):
+						 self.shade_left(i,j)
+						 self.shade_right(i,j)
+					elif (self.grid[i][j].top == -1) and\
+					     (self.grid[i][j].left == -1):
+					     self.shade_right(i,j)
+					     self.shade_bottom(i,j)
+
+					elif (self.grid[i][j].bottom == -1) and\
+					     (self.grid[i][j].left == -1):
+					     self.shade_right(i,j)
+					     self.shade_top(i,j)
+					elif (self.grid[i][j].bottom == -1) and\
+					     (self.grid[i][j].right == -1):
+					     self.shade_top(i,j)
+					     self.shade_left(i,j)
+
+					elif (self.grid[i][j].left == -1) and\
+					     (self.grid[i][j].right == -1):
+					     self.shade_top(i,j)
+					     self.shade_bottom(i,j)
+
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
 		if col != 0:
