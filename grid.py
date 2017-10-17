@@ -12,6 +12,53 @@ class Grid(object):
 				temp_row.append(Square(clues[i][j]))
 			self.grid.append(temp_row)
 
+	def print_grid(self):
+		dot = u"\u2022"
+		cross = u"\u274C"
+		hbar = u"\u2015"
+		vbar = u"\u007C"
+		for i in range(self.width):
+			print(dot, end="")
+			for j in range(self.width):
+				if self.grid[i][j].top is 0:
+					print(" ", end="")
+				elif self.grid[i][j].top is 1:
+					print(hbar, end="")
+				else:
+					print(cross, end="")
+				print(dot, end="")
+			print("")
+
+			if self.grid[i][0].left is 0:
+				print(" ", end="")
+			elif self.grid[i][0].left is 1:
+				print(vbar, end="")
+			else:
+				print(cross, end="")
+			for j in range(self.width):
+				if self.grid[i][j].clue is not None:
+					print(self.grid[i][j].clue, end="")
+				elif:
+					print(" ", end="")
+				if self.grid[i][j].right is 0:
+					print(" ", end="")
+				elif self.grid[i][j].right is 1:
+					print(vbar, end="")
+				else:
+					print(" ", end="")
+			print("")
+
+		print(dot, end="")
+		for j in range(self.width):
+			if self.grid[self.width-1][j].bottom is 0:
+				print(" ", end="")
+			elif self.grid[self.width-1][j].bottom is 1:
+				print(hbar, end="")
+			else:
+				print(cross, end="")
+			print(dot, end="")
+		print("")
+
 	def find_diag_threes(self):
 		for i in range(self.width - 1):
 			if (self.grid[i][0].clue == 3) and (self.grid[i + 1][1].clue == 3):
