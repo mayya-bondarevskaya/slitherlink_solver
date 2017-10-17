@@ -96,6 +96,15 @@ class Grid(object):
 			self.cross_right(self.width-1, self.width-1)
 			self.cross_bottom(self.width-1, self.width-1)
 
+	def find_zeros(self):
+		for i in range(self.width):
+			for j in range(self.width):
+				if self.grid[i][j].clue == 0:
+					self.cross_top(i, j)
+					self.cross_bottom(i, j)
+					self.cross_right(i, j)
+					self.cross_left(i, j)
+
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
 		if col != 0:
