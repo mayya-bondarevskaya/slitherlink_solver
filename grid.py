@@ -43,12 +43,20 @@ class Grid(object):
 					self.shade_top(i, j)
 					self.shade_bottom(i, j)
 					self.shade_bottom(i+1, j)
+					if j is not 0:
+						self.cross_bottom(i, j-1)
+					if j is not self.width-1:
+						self.cross_bottom(i, j+1)
 		for i in range(self.width):
 			for j in range(self.width - 1):
 				if (self.grid[i][j].clue == 3) and (self.grid[i][j+1].clue == 3):
 					self.shade_left(i, j)
 					self.shade_right(i, j)
 					self.shade_right(i, j+1)
+					if i is not 0:
+						self.cross_right(i-1, j)
+					if i is not self.width-1:
+						self.cross_right(i+1, j)
 
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
