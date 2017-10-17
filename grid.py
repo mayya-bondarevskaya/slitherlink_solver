@@ -292,6 +292,33 @@ class Grid(object):
 					     self.shade_top(i,j)
 					     self.shade_bottom(i,j)
 
+					elif (self.grid[i][j].top == 1) and\
+					   (self.grid[i][j].right == 1):
+						self.cross_left(i,j)
+						self.cross_bottom(i,j)
+					elif (self.grid[i][j].top == 1) and\
+						 (self.grid[i][j].bottom == 1):
+						 self.cross_left(i,j)
+						 self.cross_right(i,j)
+					elif (self.grid[i][j].top == 1) and\
+					     (self.grid[i][j].left == 1):
+					     self.cross_right(i,j)
+					     self.cross_bottom(i,j)
+
+					elif (self.grid[i][j].bottom == 1) and\
+					     (self.grid[i][j].left == 1):
+					     self.cross_right(i,j)
+					     self.cross_top(i,j)
+					elif (self.grid[i][j].bottom == 1) and\
+					     (self.grid[i][j].right == 1):
+					     self.cross_top(i,j)
+					     self.cross_left(i,j)
+
+					elif (self.grid[i][j].left == 1) and\
+					     (self.grid[i][j].right == 1):
+					     self.cross_top(i,j)
+					     self.criss_bottom(i,j)
+
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
 		if col != 0:
