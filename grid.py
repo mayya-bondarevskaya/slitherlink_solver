@@ -38,16 +38,17 @@ class Grid(object):
 
 	def find_nearby_threes(self):
 		for i in range(self.width - 1):
+			for j in range(self.width):
+				if (self.grid[i][j].clue == 3) and (self.grid[i+1][j].clue == 3):
+					self.shade_top(i, j)
+					self.shade_bottom(i, j)
+					self.shade_bottom(i+1, j)
+		for i in range(self.width):
 			for j in range(self.width - 1):
-				if self.grid[i][j].clue == 3:
-					if self.grid[i][j + 1] == 3:
-						self.shade_left(i, j)
-						self.shade_right(i, j)
-						self.shade_right(i, j + 1)
-					if self.grid[i + 1][j] == 3:
-						self.shade_top(i, j)
-						self.shade_bottom(i, j)
-						self.shade_bottom(i + 1, j)
+				if (self.grid[i][j].clue == 3) and (self.grid[i][j+1].clue == 3):
+					self.shade_left(i, j)
+					self.shade_right(i, j)
+					self.shade_right(i, j+1)
 
 	def shade_left(self, row, col):
 		self.grid[row][col].shade_left()
