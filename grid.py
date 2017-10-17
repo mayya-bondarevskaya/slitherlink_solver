@@ -14,7 +14,7 @@ class Grid(object):
 
 	def print_grid(self):
 		dot = u"\u2022"
-		cross = u"\u274C"
+		cross = "x"
 		hbar = u"\u2015"
 		vbar = u"\u007C"
 		for i in range(self.width):
@@ -104,6 +104,68 @@ class Grid(object):
 						self.cross_right(i-1, j)
 					if i is not self.width-1:
 						self.cross_right(i+1, j)
+
+	def check_intersection_three_sides(self):
+		for i in range(self.width-1):
+			if self.grid[i][0].left == -1:
+				if self.grid[i+1][0].left == -1:
+					self.cross_bottom(i, 0)
+				elif self.grid[i+1][0].left == 1:
+					self.shade_bottom(i, 0)
+				elif self.grid[i][0].bottom == -1:
+					self.cross_left(i+1, 0)
+				elif self.grid[i][0].bottom == 1:
+					self.shade_left(i+1, 0)
+			elif self.grid[i][0].bottom == -1:
+				if self.grid[i+1][0].left == -1:
+					self.cross_left(i, 0)
+				elif self.grid[i+1][0].left == 1:
+					self.shade_left(i, 0)
+
+			if self.grid[0][i].top == -1:
+				if self.grid[0][i+1].top == -1:
+					self.cross_right(0, i)
+				elif self.grid[0][i+1].top == 1:
+					self.shade_right(0, i)
+				elif self.grid[0][i].right == -1:
+					self.cross_top(0, i+1)
+				elif self.grid[0][i].right == 1:
+					self.shade_top(0, i+1)
+			elif self.grid[0][i].right == -1:
+				if self.grid[0][i+1].top == -1:
+					self.cross_top(0, i)
+				elif self.grid[0][i+1].top == 1:
+					self.cross_top(0, i)
+
+			if self.grid[i][self.width-1].right == -1:
+				if self.grid[i+1][self.width-1].right == -1:
+					self.cross_bottom(i, self.width-1)
+				elif self.grid[i+1][self.width-1].right == 1:
+					self.shade_bottom(i, self.width-1)
+				elif self.grid[i][self.width-1].bottom == -1:
+					self.cross_right(i+1,self.width-1)
+				elif self.grid[i][self.width-1].bottom == 1:
+					self.shade_right(i+1,self.width-1)
+			elif self.grid[i][self.width-1].bottom == -1:
+				if self.grid[i+1][self.width-1].right == -1:
+					self.cross_right(i, self.width-1)
+				elif self.grid[i+1][self.width-1].right == 1:
+					self.shade_right(i, self.width-1)
+
+			if self.grid[self.width-1][i].bottom == -1:
+				if self.grid[self.width-1][i+1].bottom == -1:
+					self.cross_right(self.width-1, i)
+				elif self.grid[self.width-1][i+1].bottom == 1:
+					self.shade_right(self.width-1, i)
+				elif self.grid[self.width-1][i].right == -1:
+					self.cross_bottom(self.width-1, i+1)
+				elif self.grid[self.width-1][i].right == 1:
+					self.shade_bottom(self.width-1, i+1)
+			elif self.grid[self.width-1][i].right == -1:
+				if self.grid[self.width-1][i+1].bottom == -1:
+					self.cross_bottom(self.width-1, i)
+				elif self.grid[self.width-1][i+1].bottom == 1:
+					self.shade_bottom(self.width-1, i)
 
 	def check_intersection_four_sides(self):
 		for i in range(self.width-1):
