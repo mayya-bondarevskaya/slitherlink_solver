@@ -20,5 +20,5 @@ class Square(object):
 		self.bottom = -1
 	def cross_right(self):
 		self.right = -1
-	def cress_left(self):
-		self.left = =-1
+	def cross_left(self):
+		self.left = -1

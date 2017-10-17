@@ -38,14 +38,14 @@ class Grid(object):
 			for j in range(self.width):
 				if self.grid[i][j].clue is not None:
 					print(self.grid[i][j].clue, end="")
-				elif:
+				else:
 					print(" ", end="")
 				if self.grid[i][j].right is 0:
 					print(" ", end="")
 				elif self.grid[i][j].right is 1:
 					print(vbar, end="")
 				else:
-					print(" ", end="")
+					print(cross, end="")
 			print("")
 
 		print(dot, end="")
