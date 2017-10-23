@@ -15,7 +15,8 @@ class Grid(object):
 	def check_patterns(self):
 		self.find_nearby_threes()
 		self.find_diag_threes()
-		self.find_diagonal_three_and_one()
+		self.find_diag_three_and_one()
+		self.find_part_solved_two()
 
 	def check_intersections(self):
 		self.check_intersection_two_sides()
@@ -301,7 +302,7 @@ class Grid(object):
 		elif top == 1:
 			self.shade_bottom(end_id, end_id)
 
-	def find_diagonal_three_and_one(self):
+	def find_diag_three_and_one(self):
 		for i in range(self.width-1):
 			for j in range(self.width-1):
 				square_11 = self.grid[i][j]
@@ -337,6 +338,59 @@ class Grid(object):
 					elif (square_12.top is -1) and (square_12.right is -1):
 						self.shade_left(i+1, j)
 						self.shade_bottom(i+1, j)
+
+	def find_part_solved_two(self):
+		for i in range(self.width-1):
+			for j in range(self.width-1):
+				if self.grid[i][j].clue is 2:
+					top = self.grid[i][j].top
+					right = self.grid[i][j].right
+					bottom = self.grid[i][j].bottom
+					left = self.grid[i][j].left
+					if (bottom, right) is (0, 0) and\
+					   (left, top) is (-1, 1) or (1, -1):
+						diag_square = self.grid[i+1][j+1]
+						if diag_square.left is 1:
+							self.cross_top(i+1, j+1)
+						elif diag_square.left is -1:
+							self.shade_top(i+1, j+1)
+						if diag_square.top is 1:
+							self.cross_left(i+1, j+1)
+						elif diag_square.top is -1:
+							self.shade_left(i+1, j+1)
+					elif (bottom, left) is (0, 0) and\
+						 (top, right) is (-1, 1) or (1, -1):
+						diag_square = self.grid[i+1][j-1]
+						if diag_square.top is 1:
+							self.cross_right(i+1, j-1)
+						elif diag_square.top is -1:
+							self.shade_right(i+1, j-1)
+						if diag_square.right is 1:
+							self.cross_top(i+1, j-1)
+						elif diag_square.right is -1:
+							self.shade_right(i+1, j-1)
+					elif (top, left) is (0, 0) and\
+						 (bottom, right) is (-1, 1) or (1, -1):
+						diag_square = self.grid[i-1][j-1]
+						if diag_square.right is 1:
+							self.cross_bottom(i-1, j-1)
+						elif diag_square.right is -1:
+							self.shade_bottom(i-1, j-1)
+						if diag_square.bottom is 1:
+							self.cross_right(i-1, j-1)
+						elif diag_square.bottom is -1:
+							self.shade_right(i-1, j-1)
+					elif (top, right) is (0, 0) and\
+						 (bottom, left) is (-1, 1) or (1, -1):
+						diag_square = self.grid[i-1][j+1]
+						if diag_square.left is 1:
+							self.cross_bottom(i-1, j+1)
+						elif diag_square.left is -1:
+							self.shade_bottom(i-1, j+1)
+						if diag_square.bottom is 1:
+							self.cross_left(i-1, j+1)
+						elif diag_square.bottom is -1:
+							self.shade_bottom(i-1, j+1)
 
 	def check_intersection_four_sides(self):
 		for i in range(self.width-1):
