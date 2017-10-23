@@ -12,6 +12,23 @@ class Grid(object):
 				temp_row.append(Square(clues[i][j]))
 			self.grid.append(temp_row)
 
+	def check_intersections(self):
+		self.check_intersection_two_sides()
+		self.check_intersection_three_sides()
+		self.check_intersection_four_sides()
+
+	def check_clues(self):
+		self.corner_clues()
+		self.find_zeros()
+		self.find_ones()
+		self.find_twos()
+		self.find_threes()
+
+	def run(self, number_of_iterations):
+		for i in range(number_of_iterations):
+			self.check_intersections()
+			self.check_clues()
+
 	def print_grid(self):
 		dot ="." #u"\u2022"
 		cross = "x"
@@ -313,7 +330,7 @@ class Grid(object):
 					if top is -1:
 						if right is -1:
 							self.shade_left(i+1, j+1)
-						elif botom is -1:
+						elif bottom is -1:
 							self.shade_bottom(i, j+1)
 					elif (right is -1) and (bottom is -1):
 						self.shade_right(i, j)
