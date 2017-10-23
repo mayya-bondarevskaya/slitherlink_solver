@@ -1,5 +1,3 @@
- #!/usr/bin/python
- # -*- coding: utf-8 -*-
 import numpy as np
 from square import Square
 
@@ -15,10 +13,10 @@ class Grid(object):
 			self.grid.append(temp_row)
 
 	def print_grid(self):
-		dot = u"\u2022"
+		dot ="." #u"\u2022"
 		cross = "x"
-		hbar = "_"#u"\u2015"
-		vbar = "|"#u"\u007C"
+		hbar = "_" #u"\u2015"
+		vbar = "|" #u"\u007C"
 		for i in range(self.width):
 			print(dot, end="")
 			for j in range(self.width):
@@ -265,62 +263,61 @@ class Grid(object):
 	def check_intersection_four_sides(self):
 		for i in range(self.width-1):
 			for j in range(self.width-1):
-				if self.grid[i][j].right == -1:
-					if self.grid[i][j+1].bottom == -1:
-						if self.grid[i+1][j+1].left == -1:
-							self.cross_top(i+1, j)
-						elif self.grid[i+1][j+1].left == 1:
-							self.shade_top(i+1, j)
-					elif self.grid[i][j+1].bottom == 1:
-						if self.grid[i+1][j+1].left == -1:
-							self.shade_top(i+1, j)
-						elif self.grid[i+1][j+1].left == 1:
-							self.cross_top(i+1, j)
-				elif self.grid[i][j].right == 0:
-					if self.grid[i][j+1].bottom == -1:
-						if self.grid[i+1][j+1].left == -1:
-							if self.grid[i+1][j].top == 1:
-								self.shade_right(i, j)
-					elif self.grid[i][j+1].bottom == 0:
-						if self.grid[i+1][j+1].left == 1:
-							if self.grid[i+1][j].top == 1:
-								self.shade_right(i, j)
-								self.shade_bottom(i, j+1)
-					elif self.grid[i][j+1].bottom == 1:
-						if self.grid[i+1][j+1].left == -1:
-							if self.grid[i+1][j].top == -1:
-								self.shade_right(i, j)
-						elif self.grid[i+1][j+1].left == 1:
-							self.cross_right(i, j)
-							self.cross_top(i+1, j)
-				elif self.grid[i][j].right == 1:
-					if self.grid[i][j+1].bottom == -1:
-						if self.grid[i+1][j+1].left == -1:
-							self.shade_top(i+1, j)
-						elif self.grid[i+1][j+1].left == 0:
-							if self.grid[i+1][j].top == 1:
-								self.cross_left(i+1, j+1)
-							elif self.grid[i+1][j].top == -1:
-								self.shade_left(i+1, j+1)
-						elif self.grid[i+1][j+1].left == 1:
-							self.cross_top(i+1, j)
-					elif self.grid[i][j+1].bottom == 0:
-						if self.grid[i+1][j+1].left == -1:
-							if self.grid[i+1][j].top == 1:
-								self.cross_bottom(i, j+1)
-							elif self.grid[i+1][j].top == -1:
-								self.shade_bottom(i, j+1)
-						elif self.grid[i+1][j+1].left == 0:
-							if self.grid[i+1][j].top == 1:
-								self.cross_bottom(i, j+1)
-								self.cross_left(i+1, j+1)
-						elif self.grid[i+1][j+1].left == 1:
-							self.cross_bottom(i, j+1)
-							self.cross_top(i+1, j)
-					elif self.grid[i][j+1].bottom == 1:
+				top = self.grid[i][j].right
+				right = self.grid[i][j+1].bottom
+				bottom = self.grid[i+1][j+1].left
+				left = self.grid[i+1][j].top
+				if top is 1:
+					if right is 1:
 						self.cross_left(i+1, j+1)
 						self.cross_top(i+1, j)
-				
+					elif bottom is 1:
+						self.cross_bottom(i, j+1)
+						self.cross_top(i+1, j)
+					elif left is 1:
+						self.cross_bottom(i, j+1)
+						self.cross_left(i+1, j+1)
+					elif right is -1:
+						if bottom is -1:
+							self.shade_top(i+1, j)
+						elif left is -1:
+							self.shade_left(i+1, j+1)
+					elif (bottom is -1) and (left is -1):
+						self.shade_bottom(i, j+1)
+				elif right is 1:
+					if bottom is 1:
+						self.cross_top(i+1, j)
+						self.cross_right(i, j)
+					elif left is 1:
+						self.cross_right(i, j)
+						self.cross_left(i+1, j+1)
+					elif bottom is -1:
+						if left is -1:
+							self.shade_right(i, j)
+						elif top is -1:
+							self.shade_top(i+1, j)
+					elif (top is -1) and (left is -1):
+						self.shade_left(i+1, j+1)
+				elif bottom is 1:
+					if left is 1:
+						self.cross_right(i, j)
+						self.cross_bottom(i, j+1)
+					elif left is -1:
+						if top is -1:
+							self.shade_bottom(i, j+1)
+						elif right is -1:
+							self.shade_right(i, j)
+					elif (right is -1) and (top is -1):
+						self.shade_top(i+1, j)
+				elif left is 1: 
+					if top is -1:
+						if right is -1:
+							self.shade_left(i+1, j+1)
+						elif botom is -1:
+							self.shade_bottom(i, j+1)
+					elif (right is -1) and (bottom is -1):
+						self.shade_right(i, j)
+
 	def corner_clues(self):
 		if self.grid[0][0].clue == 3:
 			self.shade_left(0, 0)
@@ -367,6 +364,39 @@ class Grid(object):
 					self.cross_bottom(i, j)
 					self.cross_right(i, j)
 					self.cross_left(i, j)
+
+	def find_ones(self):
+		for i in range(self.width):
+			for j in range(self.width):
+				if self.grid[i][j].clue == 1:
+					top = self.grid[i][j].top
+					right = self.grid[i][j].right
+					bottom = self.grid[i][j].bottom
+					left = self.grid[i][j].left
+					if left == 1:
+						self.cross_top(i, j)
+						self.cross_right(i, j)
+						self.cross_bottom(i, j)
+					elif top == 1:
+						self.cross_right(i, j)
+						self.cross_bottom(i, j)
+						self.cross_left(i, j)
+					elif right == 1:
+						self.cross_bottom(i, j)
+						self.cross_left(i, j)
+						self.cross_top(i, j)
+					elif bottom == 1:
+						self.cross_left(i, j)
+						self.cross_top(i, j)
+						self.cross_right(i, j)
+					elif (left == -1) and (top == -1) and (right == -1):
+						self.shade_bottom(i, j)
+					elif (top == -1) and (right == -1) and (bottom == -1):
+						self.shade_left(i, j)
+					elif (right == -1) and (bottom == -1) and (left == -1):
+						self.shade_top(i, j)
+					elif (bottom == -1) and (left == -1) and (top == -1):
+						self.shade_right(i, j)
 
 	def find_threes(self):
 		for i in range(self.width):
