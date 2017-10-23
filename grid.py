@@ -15,6 +15,7 @@ class Grid(object):
 	def check_patterns(self):
 		self.find_nearby_threes()
 		self.find_diag_threes()
+		self.find_diagonal_three_and_one()
 
 	def check_intersections(self):
 		self.check_intersection_two_sides()
@@ -299,6 +300,43 @@ class Grid(object):
 			self.cross_bottom(end_id, end_id)
 		elif top == 1:
 			self.shade_bottom(end_id, end_id)
+
+	def find_diagonal_three_and_one(self):
+		for i in range(self.width-1):
+			for j in range(self.width-1):
+				square_11 = self.grid[i][j]
+				square_12 = self.grid[i][j+1]
+				square_21 = self.grid[i+1][j]
+				square_22 = self.grid[i+1][j+1]
+
+				if (square_11.clue is 3) and (square_22.clue is 1):
+					if (square_11.left is 1) and (square_11.top is 1):
+						self.cross_bottom(i+1, j+1)
+						self.cross_right(i+1, j+1)
+					elif (square_22.right is -1) and (square_22.bottom is -1):
+						self.shade_left(i, j)
+						self.shade_top(i, j)
+				elif (square_12.clue is 3) and (square_21.clue is 1):
+					if (square_12.top is 1) and (square_12.right is 1):
+						self.cross_left(i+1, j)
+						self.cross_bottom(i+1, j)
+					elif (square_21.left is -1) and (square_21.bottom is -1):
+						self.shade_top(i, j+1)
+						self.shade_right(i, j+1)
+				elif (square_22.clue is 3) and (square_11.clue is 1):
+					if (square_22.right is 1) and (square_22.bottom is 1):
+						self.cross_left(i, j)
+						self.cross_top(i, j)
+					elif (square_11.left is -1) and (square_11.top is -1):
+						self.shade_right(i+1, j+1)
+						self.shade_bottom(i+1, j+1)
+				elif (square_21.clue is 3) and (square_12.clue is 1):
+					if (square_21.left is 1) and (square_21.bottom is 1):
+						self.cross_top(i, j+1)
+						self.cross_right(i, j+1)
+					elif (square_12.top is -1) and (square_12.right is -1):
+						self.shade_left(i+1, j)
+						self.shade_bottom(i+1, j)
 
 	def check_intersection_four_sides(self):
 		for i in range(self.width-1):
