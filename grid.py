@@ -347,50 +347,54 @@ class Grid(object):
 					right = self.grid[i][j].right
 					bottom = self.grid[i][j].bottom
 					left = self.grid[i][j].left
-					if (bottom, right) is (0, 0) and\
-					   (left, top) is (-1, 1) or (1, -1):
-						diag_square = self.grid[i+1][j+1]
-						if diag_square.left is 1:
-							self.cross_top(i+1, j+1)
-						elif diag_square.left is -1:
-							self.shade_top(i+1, j+1)
-						if diag_square.top is 1:
-							self.cross_left(i+1, j+1)
-						elif diag_square.top is -1:
-							self.shade_left(i+1, j+1)
-					elif (bottom, left) is (0, 0) and\
-						 (top, right) is (-1, 1) or (1, -1):
-						diag_square = self.grid[i+1][j-1]
-						if diag_square.top is 1:
-							self.cross_right(i+1, j-1)
-						elif diag_square.top is -1:
-							self.shade_right(i+1, j-1)
-						if diag_square.right is 1:
-							self.cross_top(i+1, j-1)
-						elif diag_square.right is -1:
-							self.shade_right(i+1, j-1)
-					elif (top, left) is (0, 0) and\
-						 (bottom, right) is (-1, 1) or (1, -1):
-						diag_square = self.grid[i-1][j-1]
-						if diag_square.right is 1:
-							self.cross_bottom(i-1, j-1)
-						elif diag_square.right is -1:
-							self.shade_bottom(i-1, j-1)
-						if diag_square.bottom is 1:
-							self.cross_right(i-1, j-1)
-						elif diag_square.bottom is -1:
-							self.shade_right(i-1, j-1)
-					elif (top, right) is (0, 0) and\
-						 (bottom, left) is (-1, 1) or (1, -1):
-						diag_square = self.grid[i-1][j+1]
-						if diag_square.left is 1:
-							self.cross_bottom(i-1, j+1)
-						elif diag_square.left is -1:
-							self.shade_bottom(i-1, j+1)
-						if diag_square.bottom is 1:
-							self.cross_left(i-1, j+1)
-						elif diag_square.bottom is -1:
-							self.shade_bottom(i-1, j+1)
+					if (bottom, right) == (0, 0):
+						if ((left, top) == (-1, 1)) or\
+							((left, top) == (1, -1)):
+							diag_square = self.grid[i+1][j+1]
+							if diag_square.left is 1:
+								self.cross_top(i+1, j+1)
+							elif diag_square.left is -1:
+								self.shade_top(i+1, j+1)
+							elif diag_square.top is 1:
+								self.cross_left(i+1, j+1)
+							elif diag_square.top is -1:
+								self.shade_left(i+1, j+1)
+					elif (bottom, left) == (0, 0):
+						if ((top, right) == (-1, 1)) or\
+							((top, right) == (1, -1)):
+							diag_square = self.grid[i+1][j-1]
+							if diag_square.top is 1:
+								self.cross_right(i+1, j-1)
+							elif diag_square.top is -1:
+								self.shade_right(i+1, j-1)
+							elif diag_square.right is 1:
+								self.cross_top(i+1, j-1)
+							elif diag_square.right is -1:
+								self.shade_right(i+1, j-1)
+					elif (top, left) == (0, 0): 
+						if ((bottom, right) == (-1, 1)) or\
+							((bottom, right) == (1, -1)):
+							diag_square = self.grid[i-1][j-1]
+							if diag_square.right is 1:
+								self.cross_bottom(i-1, j-1)
+							elif diag_square.right is -1:
+								self.shade_bottom(i-1, j-1)
+							elif diag_square.bottom is 1:
+								self.cross_right(i-1, j-1)
+							elif diag_square.bottom is -1:
+								self.shade_right(i-1, j-1)
+					elif (top, right) == (0, 0):
+						if ((bottom, left) == (-1, 1)) or\
+							((bottom, left) == (1, -1)):
+							diag_square = self.grid[i-1][j+1]
+							if diag_square.left is 1:
+								self.cross_bottom(i-1, j+1)
+							elif diag_square.left is -1:
+								self.shade_bottom(i-1, j+1)
+							elif diag_square.bottom is 1:
+								self.cross_left(i-1, j+1)
+							elif diag_square.bottom is -1:
+								self.shade_bottom(i-1, j+1)
 
 	def check_intersection_four_sides(self):
 		for i in range(self.width-1):
